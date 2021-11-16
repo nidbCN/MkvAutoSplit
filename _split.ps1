@@ -44,6 +44,11 @@ for ($i = 1; $i -lt $chapterCount; $i++) {
     $chapter = $chapterList[$i - 1]
     $nextChapter = $chapterList[$i]
     $chapterName = $chapter.ChapterDisplay.ChapterString
+    $index = $chapterName.IndexOf('/');
+
+    if ($index -igt 0) {
+        $chapterName = $chapterFile.Substring(0, $index)
+    }
 
     Write-Output "[INFO]Try codec $chapterName"
     ffmpeg -ss $chapter.ChapterTimeStart -to $nextChapter.ChapterTimeStart -i "$mkvName" -vcodec hevc -acodec flac "$chapterName.mkv"
